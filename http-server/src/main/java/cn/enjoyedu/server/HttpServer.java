@@ -18,7 +18,7 @@ public class HttpServer {
     public static final int port = 6789; //设置服务端端口
     private static EventLoopGroup group = new NioEventLoopGroup();
     private static ServerBootstrap b = new ServerBootstrap();
-    private static final boolean SSL = false;
+    private static final boolean SSL = true;
 
     public static void main(String[] args) throws Exception {
         final SslContext sslCtx;
@@ -30,6 +30,7 @@ public class HttpServer {
         } else {
             sslCtx = null;
         }
+
         try {
             b.group(group);
             b.channel(NioServerSocketChannel.class);

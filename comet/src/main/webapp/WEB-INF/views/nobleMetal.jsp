@@ -50,7 +50,8 @@
             console.log("Connecting server!");
         };
 
-        source.onerror=function () {
+        source.onerror=function (e) {
+            console.log(e)
             console.log("error");
         };
 

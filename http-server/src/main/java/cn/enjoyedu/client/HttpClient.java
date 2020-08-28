@@ -11,6 +11,9 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.*;
+import io.netty.handler.ssl.SslContext;
+import io.netty.handler.ssl.SslContextBuilder;
+import io.netty.handler.ssl.util.SelfSignedCertificate;
 
 import java.net.URI;
 
@@ -32,6 +35,11 @@ public class HttpClient {
                 @Override
                 public void initChannel(SocketChannel ch)
                         throws Exception {
+                    //netty为我们提供的ssl加密，缺省
+                    SelfSignedCertificate ssc = new SelfSignedCertificate();
+                    SslContext sslContext = SslContextBuilder.forServer(ssc.certificate(),
+                            ssc.privateKey()).build();
+//                    ch.pipeline().addLast(sslContext.newHandler(ch.alloc()));
                     ch.pipeline().addLast(new HttpClientCodec());
                     ch.pipeline().addLast("aggre",
                             new HttpObjectAggregator(10*1024*1024));
